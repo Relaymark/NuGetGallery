@@ -418,16 +418,16 @@ namespace NuGetGallery
         {
             var markdownContentFileExtension = NuGetGallery.ContentService.MarkdownContentFileExtension;
             string alertString = null;
-            var alert = await ContentService.GetContentItemAsync(Constants.ContentNames.Alert, markdownContentFileExtension, TimeSpan.Zero);
-            if (alert != null)
-            {
-                alertString = alert.ToString().Replace("</div>", " - Check our <a href=\"http://status.nuget.org\">status page</a> for updates.</div>");
-            }
+            //var alert = await ContentService.GetContentItemAsync(Constants.ContentNames.Alert, markdownContentFileExtension, TimeSpan.Zero);
+            //if (alert != null)
+            //{
+            //    alertString = alert.ToString().Replace("</div>", " - Check our <a href=\"http://status.nuget.org\">status page</a> for updates.</div>");
+            //}
 
             if (String.IsNullOrEmpty(alertString) && _config.ReadOnlyMode)
             {
                 var readOnly = await ContentService.GetContentItemAsync(Constants.ContentNames.ReadOnly, markdownContentFileExtension, TimeSpan.Zero);
-                alertString = readOnly?.ToString();
+                alertString = (readOnly == null) ? null : readOnly.ToString();
             }
             return Content(alertString, "text/html");
         }
